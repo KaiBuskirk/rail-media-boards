@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920"
+     viewBox="0 0 1080 1920" font-family="Helvetica, Arial, sans-serif">
+  <!--
+    RAIL-WORKS POSTER TEMPLATE — 1080 x 1920 portrait
+    Every number here was measured on a real panel, not assumed.
+    Put your artwork BELOW this layer, then delete or hide this layer before export.
+    Export: PNG, 1080x1920, sRGB, FLATTENED (no alpha).
+  -->
+  <defs>
+    <style>
+      .lab  { font-size:19px; font-weight:700; letter-spacing:.08em; }
+      .note { font-size:16px; fill:#8a94a6; letter-spacing:.04em; }
+      .tick { stroke:#ff3bd4; stroke-width:1.5; opacity:.55; }
+    </style>
+  </defs>
+
+  <!-- the ground: this is the house value, dark on purpose -->
+  <rect width="1080" height="1920" fill="#0b0e14"/>
+
+  <!-- ===== 100% — the full canvas ===== -->
+  <rect x="1" y="1" width="1078" height="1918" fill="none" stroke="#ff3b30" stroke-width="2"/>
+  <rect x="8" y="8" width="230" height="26" fill="#ff3b30"/>
+  <text class="lab" x="16" y="27" fill="#0b0e14">100%  1080 × 1920</text>
+
+  <!-- ===== 98% — SAFE on a PC monitor (measured: no overscan) ===== -->
+  <rect x="11" y="19" width="1058" height="1882" fill="none" stroke="#ffcc00" stroke-width="2"/>
+  <rect x="18" y="42" width="330" height="26" fill="#ffcc00"/>
+  <text class="lab" x="26" y="61" fill="#0b0e14">98%  MONITOR SAFE  1058 × 1882</text>
+
+  <!-- ===== 90% — SAFE on a TV (measured: outer 5% is eaten) ===== -->
+  <rect x="54" y="96" width="972" height="1728" fill="none" stroke="#34c759" stroke-width="2"/>
+  <rect x="62" y="104" width="300" height="26" fill="#34c759"/>
+  <text class="lab" x="70" y="123" fill="#0b0e14">90%  TV SAFE  972 × 1728</text>
+  <text class="note" x="62" y="152">If this board might ever show on a TV, stay inside the green box.</text>
+
+  <!-- ===== reserved: the ticker strip ===== -->
+  <rect x="11" y="1804" width="1058" height="96" fill="#1a1f2b" stroke="#4d9fff"
+        stroke-width="2" stroke-dasharray="10 7"/>
+  <text class="lab" x="30" y="1845" fill="#4d9fff">RESERVED — TICKER STRIP · 96 px</text>
+  <text class="note" x="30" y="1872" fill="#6d7a94">Leave empty. The scrolling feed is composited here.</text>
+
+  <!-- ===== centre marks ===== -->
+  <line class="tick" x1="540" y1="96" x2="540" y2="1804"/>
+  <line class="tick" x1="54" y1="950" x2="1026" y2="950"/>
+  <circle cx="540" cy="950" r="7" fill="none" stroke="#ff3bd4" stroke-width="1.5" opacity=".6"/>
+
+  <!-- ===== thirds, for composition ===== -->
+  <g stroke="#ffffff" stroke-width="1" opacity=".08">
+    <line x1="54" y1="672" x2="1026" y2="672"/>
+    <line x1="54" y1="1228" x2="1026" y2="1228"/>
+    <line x1="378" y1="96" x2="378" y2="1804"/>
+    <line x1="702" y1="96" x2="702" y2="1804"/>
+  </g>
+
+  <!-- ===== type reference — MEASURED legible at 12 feet ===== -->
+  <g transform="translate(96,300)">
+    <text font-size="90"  font-weight="800" fill="#e8eaf0">Headline 90px min</text>
+    <text font-size="34"  font-weight="600" fill="#e8eaf0" y="86">Sub-head 34px minimum</text>
+    <text font-size="28"  fill="#9fb0cc" y="140">Body copy 28px minimum — this is the floor for a wall.</text>
+    <text font-size="24"  fill="#9fb0cc" y="184">Smallest legible 24px. Below this nothing reads across a room.</text>
+    <text font-size="18"  fill="#5c6675" y="228">18px — too small. Do not use on a board.</text>
+  </g>
+
+  <!-- ===== colour reference ===== -->
+  <g transform="translate(96,600)">
+    <text class="lab" fill="#8a94a6" y="-14">DARK GROUND, BRIGHT TYPE — measured: highlights crush, shadows have range</text>
+    <rect width="150" height="54" fill="#0b0e14" stroke="#2b3550"/>
+    <rect x="160" width="150" height="54" fill="#e8eaf0"/>
+    <rect x="320" width="150" height="54" fill="#ffd166"/>
+    <rect x="480" width="150" height="54" fill="#9fb0cc"/>
+    <text class="note" y="72">#0b0e14 ground</text>
+    <text class="note" x="160" y="72">#e8eaf0 type</text>
+    <text class="note" x="320" y="72">#ffd166 accent</text>
+    <text class="note" x="480" y="72">#9fb0cc dim</text>
+    <text class="note" y="104" fill="#6d7a94">Never light type on a light ground — it disappears on these panels.</text>
+  </g>
+
+  <!-- ===== the rules, on the artboard so they travel with the file ===== -->
+  <g transform="translate(96,1450)">
+    <text class="lab" fill="#8a94a6">HARD RULES</text>
+    <text class="note" y="30">1 · Nothing load-bearing outside the green 90% box.</text>
+    <text class="note" y="56">2 · Leave the blue ticker strip empty.</text>
+    <text class="note" y="82">3 · No motion — a poster is read at a glance from across a room.</text>
+    <text class="note" y="108">4 · Export PNG 1080×1920, sRGB, flattened. Number pages: 01, 02, 03.</text>
+    <text class="note" y="134">5 · Delete or hide this guide layer before you export.</text>
+  </g>
+
+  <text class="note" x="540" y="1790" text-anchor="middle" fill="#3d4659">
+    RAIL-WORKS · printshop.link · guide layer — delete before export
+  </text>
+</svg>

@@ -87,3 +87,36 @@ your file → make-board.sh → profile (canvas, safe area, codec, rotation)
 
 You never think about that. Author to the canvas and the safe box; the pipeline
 handles every surface.
+
+---
+
+## Template
+
+**`template/rail-poster-1080x1920.svg`** — open it in Illustrator, Figma, Affinity,
+anything. It carries every guide as a layer: the 100% edge, the 98% monitor-safe box,
+the 90% TV-safe box, the reserved ticker strip, thirds, centre marks, a type-size
+reference and the colour swatches.
+
+**Put your artwork below that layer, then delete or hide it before you export.**
+
+## Multi-page handoff
+
+**Loose PNGs, numbered. Not a stacked PDF.**
+
+```
+ss-01.png  ss-02.png  ss-03.png
+1080 × 1920 · sRGB · FLATTENED (no alpha)
+```
+
+A PDF would make us guess DPI, colour space and page size, and one page changing
+means re-exporting the whole document. One PNG per page is unambiguous, and the
+number is the play order.
+
+The pipeline accepts PNG and JPG pages directly — it scales to fit, preserves
+aspect, centres on the house ground and flattens any alpha:
+
+```sh
+./make-playlist.sh --secs 18 --push ss-01.png ss-02.png ss-03.png
+```
+
+Mixed is fine too — HTML pages and image pages in the same playlist.
