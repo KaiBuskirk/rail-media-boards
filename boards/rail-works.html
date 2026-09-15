@@ -1,0 +1,72 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Studio X — Rail-Works</title>
+<style>
+ /* Chrome 116 target. Flex gap (84+) and grid are fine; nothing newer used. */
+ *{box-sizing:border-box;margin:0}
+ html,body{width:1920px;height:1080px;overflow:hidden;background:#0b0e14;color:#e8eaf0;
+   font:400 28px/1.4 -apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
+   background-image:radial-gradient(130% 80% at 8% 0%,#18213a 0%,transparent 58%),
+                    radial-gradient(90% 70% at 100% 100%,#2a1030 0%,transparent 52%)}
+ .safe{position:absolute;left:96px;top:54px;width:1728px;height:972px;
+   display:grid;grid-template-rows:auto 1fr auto;gap:30px}
+ header{display:flex;align-items:baseline;gap:28px;border-bottom:3px solid #2b3550;padding-bottom:22px}
+ .mark{font-size:74px;font-weight:800;letter-spacing:.15em;line-height:1}
+ .sub{font-size:25px;color:#8b97b0;letter-spacing:.22em;text-transform:uppercase}
+ .clk{margin-left:auto;font-size:46px;color:#c7d2e6;font-variant-numeric:tabular-nums;letter-spacing:.04em}
+ main{display:flex;flex-direction:column;justify-content:center;gap:34px}
+ h1{font-size:92px;font-weight:800;line-height:1.05;letter-spacing:.01em}
+ h1 span{color:#ffd166}
+ p.lede{font-size:34px;color:#9fb0cc;max-width:26ch;line-height:1.45}
+ .cards{display:flex;gap:26px;margin-top:10px}
+ .card{flex:1;background:#141b28;border:2px solid #26304a;border-left:8px solid #4fd07f;
+   padding:26px 30px;display:flex;flex-direction:column;gap:8px}
+ .card b{font-size:30px;font-weight:700;letter-spacing:.04em}
+ .card span{font-size:23px;color:#8b97b0}
+ .card.amber{border-left-color:#f2b03c} .card.blue{border-left-color:#4d9fff}
+ footer{display:flex;align-items:center;gap:36px;border-top:3px solid #2b3550;padding-top:20px;
+   font-size:22px;color:#6d7a94;letter-spacing:.07em;font-variant-numeric:tabular-nums}
+ footer b{color:#c7d2e6;font-weight:600}
+ .right{margin-left:auto;text-align:right;color:#54607d;font-size:20px;line-height:1.5}
+ .dot{width:16px;height:16px;border-radius:50%;background:#4fd07f;display:inline-block;
+   box-shadow:0 0 16px rgba(79,208,127,.7);vertical-align:-1px;margin-right:10px}
+</style></head><body>
+<div class="safe">
+  <header><div class="mark">STUDIO&nbsp;X</div><div class="sub">Rail-Works Display Node</div>
+    <div class="clk" id="clk">--:--:--</div></header>
+  <main>
+    <h1>One discarded machine,<br><span>two signage surfaces.</span></h1>
+    <p class="lede">This panel is the native display. The Samsung next door runs through
+      the Apple TV on the same controller.</p>
+    <div class="cards">
+      <div class="card"><b>NATIVE DISPLAY</b><span>iMac 21.5&Prime; · 1920&times;1080 · live HTML</span></div>
+      <div class="card amber"><b>LEGACY BRIDGE</b><span>AirPlay daemon &rarr; A1469 &rarr; Samsung</span></div>
+      <div class="card blue"><b>NEXT OUTPUT</b><span>whatever we plug in — same architecture</span></div>
+    </div>
+  </main>
+  <footer>
+    <span><span class="dot"></span>RAIL-RIG-001</span>
+    <span>RUNNING <b id="up">0:00:00</b></span>
+    <span>FRAMES <b id="fr">0</b></span>
+    <span>SINCE <b id="since">—</b></span>
+    <span class="right">OVERNIGHT BASELINE TEST &middot; started by WILDSIDE-<br>
+      SAFE AREA 1728 &times; 972 — MEASURED ON THE SAMSUNG</span>
+  </footer>
+</div>
+<script>
+// Deliberately allocation-free in the loop: no DOM creation, only textContent on
+// four fixed nodes. An overnight test must not fail because the test leaked.
+var t0 = Date.now(), frames = 0;
+var elClk = document.getElementById('clk'), elUp = document.getElementById('up'),
+    elFr  = document.getElementById('fr'),  elSince = document.getElementById('since');
+function two(n){ return (n<10?'0':'') + n; }
+elSince.textContent = new Date().toLocaleTimeString();
+function tick(){
+  var now = new Date(), s = Math.floor((Date.now()-t0)/1000);
+  elClk.textContent = two(now.getHours())+':'+two(now.getMinutes())+':'+two(now.getSeconds());
+  elUp.textContent  = Math.floor(s/3600)+':'+two(Math.floor(s/60)%60)+':'+two(s%60);
+  elFr.textContent  = frames;
+  try { localStorage.setItem('railrig.heartbeat', JSON.stringify({t:Date.now(),frames:frames})); } catch(e){}
+}
+setInterval(tick, 1000);
+(function raf(){ frames++; requestAnimationFrame(raf); })();
+tick();
+</script></body></html>

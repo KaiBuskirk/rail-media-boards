@@ -1,0 +1,86 @@
+<!-- Venue merch board. Built against the UNION-MADE-LAB node profile:
+     dark ground (this panel crushes highlights), everything inside .safe
+     (this panel overscans), type at or above the proven 12ft floor.
+
+     PLACEHOLDERS marked TODO are mine to fill once KAI names them --
+     I am not inventing a URL, a price, or a product. -->
+<style>
+  body{font:400 30px/1.4 -apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
+       background:
+         radial-gradient(120% 90% at 12% 0%,#16203a 0%,transparent 60%),
+         radial-gradient(90% 80% at 100% 100%,#24122b 0%,transparent 55%),
+         #0b0e14;}
+  .safe{display:grid;grid-template-rows:auto 1fr auto;grid-template-columns:1fr;}
+
+  header{display:flex;align-items:baseline;gap:28px}
+  header{border-bottom:3px solid #2b3550;padding-bottom:22px}
+  .mark{font-size:76px;font-weight:800;letter-spacing:.16em;line-height:1}
+  .tag{font-size:26px;color:#8b97b0;letter-spacing:.22em;text-transform:uppercase}
+  .live{margin-left:auto;display:flex;align-items:center;gap:14px;
+        font-size:24px;letter-spacing:.2em;color:#9fb0cc}
+  .live i{width:18px;height:18px;border-radius:50%;background:#34c759;
+          box-shadow:0 0 18px #34c759;display:block}
+
+  main{display:grid;grid-template-columns:1fr 1fr 1fr;gap:34px;align-content:center;
+       padding:34px 0}
+  .item{background:#151c2b;border:2px solid #26304a;border-radius:20px;
+        padding:30px;display:flex;flex-direction:column;gap:16px}
+  .art{height:250px;border-radius:12px;display:flex;align-items:center;
+       justify-content:center}
+  .art{color:#54607d;font-size:24px;letter-spacing:.18em;
+       background:repeating-linear-gradient(45deg,#1b2333 0 14px,#18202e 14px 28px);
+       border:2px dashed #2f3a54}
+  .name{font-size:40px;font-weight:700;line-height:1.15}
+  .sub{font-size:25px;color:#8b97b0}
+  .price{font-size:46px;font-weight:800;color:#ffd166;margin-top:auto}
+
+  footer{display:flex;align-items:center;gap:44px;border-top:3px solid #2b3550;
+         padding-top:26px}
+  .qr{width:190px;height:190px;background:#fff;border-radius:14px;flex:none;
+      display:flex;align-items:center;justify-content:center;
+      color:#111;font-size:19px;font-weight:700;text-align:center;padding:14px}
+  .cta{font-size:56px;font-weight:800;line-height:1.15}
+  .cta span{color:#ffd166}
+  .how{font-size:27px;color:#8b97b0;margin-top:10px}
+  .venue{margin-left:auto;text-align:right;color:#6d7a94;font-size:23px;
+         letter-spacing:.16em;line-height:1.7}
+  .venue b{display:block;color:#c7d2e6;font-size:31px;letter-spacing:.1em}
+</style>
+
+<div class="safe">
+  <header>
+    <div class="mark">STUDIO&nbsp;X</div>
+    <div class="tag">Merch Portal</div>
+    <div class="live"><i></i> ON SITE</div>
+  </header>
+
+  <main>
+    <div class="item">
+      <div class="art">ART SLOT 1</div>
+      <div class="name">TODO — product</div>
+      <div class="sub">TODO — sizes</div>
+      <div class="price">$TODO</div>
+    </div>
+    <div class="item">
+      <div class="art">ART SLOT 2</div>
+      <div class="name">TODO — product</div>
+      <div class="sub">TODO — sizes</div>
+      <div class="price">$TODO</div>
+    </div>
+    <div class="item">
+      <div class="art">ART SLOT 3</div>
+      <div class="name">TODO — product</div>
+      <div class="sub">TODO — sizes</div>
+      <div class="price">$TODO</div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="qr">QR<br>TODO:<br>name the URL</div>
+    <div>
+      <div class="cta">SCAN TO <span>ORDER</span></div>
+      <div class="how">Printed local &middot; pick up or ship</div>
+    </div>
+    <div class="venue"><b>TODO — VENUE</b>UNION-MADE LAB &middot; NODE 001</div>
+  </footer>
+</div>
