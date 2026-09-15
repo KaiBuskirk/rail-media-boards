@@ -1,0 +1,124 @@
+<!doctype html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Studio X — Live Poster</title>
+<!-- LIVE poster: 1080x1920 portrait, with a ticker fed from feed/ticker.json.
+     This is the BROWSER path. It renders live HTML and re-reads the feed on a
+     timer, so the ticker genuinely changes without re-rendering a video.
+     The AirPlay/MP4 path cannot do this — a ticker baked into a video is frozen.
+     ZERO third-party loads: same-origin fetch only. That rule is what keeps an
+     unpatched kiosk browser safe. -->
+<style>
+ :root{--gold:#ffd166;--dim:#9fb0cc;--edge:#26304a}
+ *{box-sizing:border-box;margin:0}
+ html,body{width:1080px;height:1920px;overflow:hidden;background:#0b0e14;color:#e8eaf0;
+   font:400 30px/1.45 -apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
+   background-image:radial-gradient(120% 55% at 50% 0%,#1b2545 0%,transparent 60%),
+                    radial-gradient(100% 45% at 50% 100%,#3a1030 0%,transparent 55%)}
+ /* safe area 0.98 — measured on this panel class, no overscan */
+ .safe{position:absolute;left:11px;top:19px;width:1058px;height:1882px;
+   display:grid;grid-template-rows:auto 1fr auto auto;gap:0}
+
+ header{text-align:center;padding-top:26px}
+ .mark{font-size:92px;font-weight:800;letter-spacing:.2em;line-height:1;text-indent:.2em}
+ .rule{height:4px;background:linear-gradient(90deg,transparent,var(--gold),transparent);
+   margin:26px 0 18px}
+ .kicker{font-size:27px;color:#8b97b0;letter-spacing:.42em;text-transform:uppercase}
+
+ main{display:flex;flex-direction:column;justify-content:center;gap:44px;text-align:center}
+ h1{font-size:118px;font-weight:800;line-height:.98;letter-spacing:-.01em}
+ h1 em{font-style:normal;color:var(--gold);display:block}
+ .lede{font-size:38px;line-height:1.4;color:var(--dim);max-width:26ch;margin:0 auto}
+ .slab{border:3px solid var(--edge);background:rgba(20,27,40,.72);
+   padding:30px;display:flex;flex-direction:column;gap:12px;margin:0 30px}
+ .slab b{font-size:34px;letter-spacing:.06em}
+ .slab span{font-size:26px;color:#8b97b0}
+
+ footer{text-align:center;padding-bottom:16px}
+ .qr{width:210px;height:210px;background:#fff;margin:0 auto 18px;display:flex;
+   align-items:center;justify-content:center;text-align:center;color:#111;
+   font:700 20px/1.35 ui-monospace,Menlo,monospace;padding:14px}
+ .cta{font-size:50px;font-weight:800;letter-spacing:.04em}
+ .cta em{font-style:normal;color:var(--gold)}
+
+ /* ---- the ticker ---- */
+ .ticker{height:86px;border-top:3px solid var(--edge);border-bottom:3px solid var(--edge);
+   background:rgba(10,13,19,.85);overflow:hidden;position:relative;display:flex;
+   align-items:center;margin-top:16px}
+ .ticker .tape{display:flex;white-space:nowrap;will-change:transform;
+   animation:slide linear infinite}
+ .ticker .tape span{font-size:32px;letter-spacing:.1em;color:var(--dim);
+   padding:0 42px;display:inline-block}
+ .ticker .tape span::after{content:"◆";color:var(--gold);margin-left:42px;font-size:20px;
+   vertical-align:3px}
+ @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+ @media (prefers-reduced-motion:reduce){.ticker .tape{animation:none}}
+
+ .stamp{position:absolute;right:10px;bottom:6px;font:500 13px/1 ui-monospace,Menlo,monospace;
+   color:#3d4659;letter-spacing:.09em}
+ .stale{color:#f2b03c!important}
+</style></head><body>
+<div class="safe">
+  <header>
+    <div class="mark">STUDIO X</div>
+    <div class="rule"></div>
+    <div class="kicker">Printed in Norco</div>
+  </header>
+
+  <main>
+    <h1>Made here.<em>Worn out there.</em></h1>
+    <p class="lede">Shirts, posters and signs pressed a few miles from where you're standing.</p>
+    <div class="slab">
+      <b id="offer">TODO — what's on the rack</b>
+      <span id="detail">TODO — sizes &middot; TODO — price</span>
+    </div>
+  </main>
+
+  <footer>
+    <div class="qr">QR<br>TODO:<br>name the URL</div>
+    <div class="cta">SCAN TO <em>ORDER</em></div>
+  </footer>
+
+  <div class="ticker"><div class="tape" id="tape"><span>loading feed…</span></div></div>
+</div>
+<div class="stamp" id="stamp">poster-live · live-html</div>
+
+<script>
+// Re-reads the feed on a timer. Same origin only — no third-party fetch, ever.
+// Last-known-good: a failed poll leaves the current tape running rather than
+// blanking the strip. Same rule the node daemon follows.
+var FEED = "../feed/ticker.json", POLL = 60000, lastOk = null, sig = "";
+
+function render(d){
+  var items = (d && d.items) || [];
+  if (!items.length) return;
+  var s = items.join("|");
+  if (s === sig) return;                 // unchanged — don't restart the animation
+  sig = s;
+  var tape = document.getElementById("tape");
+  // duplicate the run so the -50% keyframe wraps seamlessly
+  tape.innerHTML = items.concat(items).map(function(t){
+    return "<span>" + String(t).replace(/[<>&]/g, "") + "</span>";
+  }).join("");
+  tape.style.animationDuration = ((d.speed || 60)) + "s";
+  if (d.offer)  document.getElementById("offer").textContent  = d.offer;
+  if (d.detail) document.getElementById("detail").textContent = d.detail;
+}
+
+function stamp(ok){
+  var el = document.getElementById("stamp");
+  var t = new Date();
+  el.textContent = "poster-live · live-html · " +
+    String(t.getHours()).padStart(2,"0") + String(t.getMinutes()).padStart(2,"0") +
+    (ok ? "" : " · FEED STALE");
+  el.className = "stamp" + (ok ? "" : " stale");
+}
+
+function poll(){
+  fetch(FEED, {cache:"no-store"})
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(d){ lastOk = d; render(d); stamp(true); })
+    .catch(function(){ stamp(false); });   // keep the last good tape on screen
+}
+poll(); setInterval(poll, POLL);
+setInterval(function(){ stamp(!!lastOk); }, 60000);
+</script></body></html>

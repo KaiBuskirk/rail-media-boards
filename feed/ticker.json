@@ -1,0 +1,11 @@
+{
+  "_comment": "EDIT THIS FILE TO CHANGE THE TICKER. github.com/KaiBuskirk/rail-media-boards -> feed/ticker.json -> pencil icon. Saves in seconds, screens pick it up on their next poll. No server, no credentials.",
+  "updated": "2026-09-15T16:30:00Z",
+  "speed": 60,
+  "items": [
+    "PRINTED IN NORCO — shirts, posters and signs pressed a few miles from where you're standing",
+    "TODO — put a real offer here",
+    "STUDIO X · printshop.link",
+    "TODO — a second line, as many as you like"
+  ]
+}
